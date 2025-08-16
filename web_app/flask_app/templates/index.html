@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background: #181c24;
+            color: #e0e0e0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .container {
+            background: #232733;
+            max-width: 500px;
+            margin: 40px auto 0 auto;
+            padding: 36px 32px 28px 32px;
+            border-radius: 18px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+        }
+        h1 {
+            color: #fff;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 32px;
+            font-size: 2.1rem;
+        }
+        .form-row {
+            display: flex;
+            gap: 18px;
+        }
+        .form-group {
+            flex: 1;
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 1rem;
+            color: #b0b6c3;
+            margin-bottom: 7px;
+            font-weight: 500;
+        }
+        input[type="number"], input[type="text"], select {
+            background: #232733;
+            color: #e0e0e0;
+            border: 1.5px solid #353a48;
+            border-radius: 7px;
+            padding: 10px 12px;
+            font-size: 1rem;
+            transition: border 0.2s;
+        }
+        input[type="number"]:focus, input[type="text"]:focus, select:focus {
+            border: 1.5px solid #4f8cff;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            background: linear-gradient(90deg, #4f8cff 0%, #2353e6 100%);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 13px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 10px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #2353e6 0%, #4f8cff 100%);
+            box-shadow: 0 4px 16px rgba(79,140,255,0.18);
+        }
+        .result {
+            margin-top: 28px;
+            padding: 18px 16px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .result.success {
+            background: #1e2b1e;
+            color: #7fffa1;
+            border: 1.5px solid #2e7d32;
+        }
+        .result.error {
+            background: #2a1e1e;
+            color: #ff7f7f;
+            border: 1.5px solid #c62828;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 6vw 18px 6vw;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>House Price Prediction</h1>
+        <form method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="Bedrooms">Number of Bedrooms:</label>
+                    <input type="number" id="Bedrooms" name="Bedrooms" min="0" step="1" required value="{{ form_data['Bedrooms'] if form_data and 'Bedrooms' in form_data else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="Bathrooms">Number of Bathrooms:</label>
+                    <input type="number" id="Bathrooms" name="Bathrooms" min="0" step="1" required value="{{ form_data['Bathrooms'] if form_data and 'Bathrooms' in form_data else '' }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="SquareFeet">Square Feet:</label>
+                    <input type="number" id="SquareFeet" name="SquareFeet" min="0" step="1" required value="{{ form_data['SquareFeet'] if form_data and 'SquareFeet' in form_data else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="YearBuilt">Year Built:</label>
+                    <input type="number" id="YearBuilt" name="YearBuilt" min="1800" max="2025" required value="{{ form_data['YearBuilt'] if form_data and 'YearBuilt' in form_data else '' }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Neighborhood">Neighborhood:</label>
+                <select id="Neighborhood" name="Neighborhood" required>
+                    <option value="" disabled {% if not form_data or not form_data['Neighborhood'] %}selected{% endif %}>Select Neighborhood</option>
+                    {% for n in neighborhood_options %}
+                        <option value="{{ n }}" {% if form_data and form_data['Neighborhood'] == n %}selected{% endif %}>{{ n }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">Predict House Price</button>
+        </form>
+        {% if error_message %}
+            <div class="result error">{{ error_message }}</div>
+        {% elif prediction is not none %}
+            <div class="result success">Predicted House Price: ${{ '{:,.2f}'.format(prediction) }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
