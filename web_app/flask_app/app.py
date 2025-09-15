@@ -96,18 +96,35 @@ def index():
                     logger.info(f"Input data: {input_data}")
                     # Log: find similar patterns in cleaned_data.csv
                     try:
-                        df_clean = pd.read_csv(os.path.join(os.path.dirname(__file__), '../../data/processed/cleaned_data.csv'))
-                        mask = (
-                            (df_clean['Bedrooms'] == input_data['Bedrooms']) &
-                            (df_clean['Bathrooms'] == input_data['Bathrooms']) &
-                            (df_clean['SquareFeet'].between(input_data['SquareFeet']-50, input_data['SquareFeet']+50)) &
-                            (df_clean['Neighborhood'] == input_data['Neighborhood']) &
-                            (df_clean['YearBuilt'].between(input_data['YearBuilt']-5, input_data['YearBuilt']+5))
-                        )
-                        similar = df_clean[mask]
-                        logger.info(f"Found {len(similar)} similar samples in cleaned_data.csv:")
-                        logger.info(similar[['SquareFeet','Bedrooms','Bathrooms','Neighborhood','YearBuilt','Price']].to_string())
-                        logger.info(f"Mean price of similar: {similar['Price'].mean() if len(similar)>0 else 'N/A'}")
+                        # Try different paths for cleaned_data.csv
+                        csv_paths = [
+                            os.path.join(os.path.dirname(__file__), '../../data/processed/cleaned_data.csv'),
+                            os.path.join(os.path.dirname(__file__), '../data/processed/cleaned_data.csv'),
+                            os.path.join(os.path.dirname(__file__), 'data/processed/cleaned_data.csv'),
+                            'data/processed/cleaned_data.csv'
+                        ]
+                        
+                        csv_path = None
+                        for path in csv_paths:
+                            if os.path.exists(path):
+                                csv_path = path
+                                break
+                                
+                        if csv_path:
+                            df_clean = pd.read_csv(csv_path)
+                            mask = (
+                                (df_clean['Bedrooms'] == input_data['Bedrooms']) &
+                                (df_clean['Bathrooms'] == input_data['Bathrooms']) &
+                                (df_clean['SquareFeet'].between(input_data['SquareFeet']-50, input_data['SquareFeet']+50)) &
+                                (df_clean['Neighborhood'] == input_data['Neighborhood']) &
+                                (df_clean['YearBuilt'].between(input_data['YearBuilt']-5, input_data['YearBuilt']+5))
+                            )
+                            similar = df_clean[mask]
+                            logger.info(f"Found {len(similar)} similar samples in cleaned_data.csv:")
+                            logger.info(similar[['SquareFeet','Bedrooms','Bathrooms','Neighborhood','YearBuilt','Price']].to_string())
+                            logger.info(f"Mean price of similar: {similar['Price'].mean() if len(similar)>0 else 'N/A'}")
+                        else:
+                            logger.warning("Could not find cleaned_data.csv file")
                     except Exception as e:
                         logger.warning(f"Could not log similar samples: {e}")
                     # Predict using pipeline

@@ -69,16 +69,19 @@ dmypy.json
 *.sqlite3
 docker-compose.override.yml
 
-# Data, models, outputs
+# Data, outputs
 data/raw/
 data/processed/
-models/
+# Keeping models for deployment
+# models/
 outputs/
 logs/
-*.pkl
-*.joblib
+# Keep essential model files
+# *.pkl
+# *.joblib
 *.h5
-*.csv
+# Keep essential data files
+# *.csv
 *.tsv
 *.xlsx
 *.parquet

@@ -1,0 +1,32 @@
+{
+  "model_name": "Linear Regression",
+  "model_type": "LinearRegression",
+  "test_r2_score": 0.567,
+  "test_rmse": 49701.529,
+  "test_mae": 39880.611,
+  "feature_count": 19,
+  "training_samples": 39952,
+  "test_samples": 9989,
+  "target_column": "Price",
+  "features_used": [
+    "SquareFeet_squared",
+    "Bedrooms",
+    "Bedrooms_log",
+    "Bathrooms",
+    "Neighborhood_avg_price",
+    "SquareFeet_plus_Bedrooms",
+    "SquareFeet_sqrt",
+    "SquareFeet_div_Bedrooms",
+    "SquareFeet_log",
+    "SquareFeet",
+    "YearBuilt",
+    "Bedrooms_squared",
+    "Bedrooms_sqrt",
+    "YearBuilt_age",
+    "SquareFeet_x_Bedrooms",
+    "Bedrooms_scaled",
+    "Bathrooms_scaled",
+    "SquareFeet_scaled",
+    "YearBuilt_scaled"
+  ]
+}
