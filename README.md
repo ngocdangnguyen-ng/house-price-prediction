@@ -33,7 +33,7 @@ Although performance is moderate, the project demonstrates the end-to-end ML wor
 
 ## Getting Started
 **Installation**
-```
+```python
 git clone https://github.com/ngocdangnguyen-ng/house-price-prediction.git
 cd house-price-prediction
 pip install -r requirements.txt
