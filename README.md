@@ -60,7 +60,7 @@ print(f"Predicted price: ${price[0]:,.2f}")
 ```
 
 ## Project Structure
-```
+```python
 housing-price-prediction/
 │
 ├── README.md
@@ -150,8 +150,9 @@ housing-price-prediction/
 * **Tools:** scikit-learn, pandas, matplotlib, seaborn
 
 ## Contact
-* **LinkedIn:** https://www.linkedin.com/in/ngocnguyen-fr
-* **Email:** nndnguyen2016@gmail.com
+- **Email**: [nndnguyen2016@gmail.com](mailto:nndnguyen2016@gmail.com)
+- **LinkedIn**: [https://www.linkedin.com/in/ngocnguyen-fr](https://www.linkedin.com/in/ngocnguyen-fr)
+- **Portfolio:** [https://portfolio-qyyg.onrender.com](https://portfolio-qyyg.onrender.com)
 
 ---
 I welcome feedback and suggestions for improvement. Thank you for visiting my project!
